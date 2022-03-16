@@ -1,11 +1,11 @@
 package model;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 
 public class BillboardList {
@@ -35,7 +35,7 @@ public class BillboardList {
 		return bd;
 	}
 
-	public ArrayList<Billboard> getDangeruousList() throws FileNotFoundException {
+	public ArrayList<Billboard> getDangeruousList() throws IOException {
 		ArrayList<Billboard> dg= new ArrayList<>();
 		for(int i=0;i<bd.size();i++) {
 			if(bd.get(i).getArea()>=200000)
@@ -83,27 +83,31 @@ public class BillboardList {
 		
 	}
 	
-	public void fileWriter(File file, int num, ArrayList<Billboard>dg2) throws FileNotFoundException {
-		PrintWriter pw= new PrintWriter(file);
+	public void fileWriter(File file, int num, ArrayList<Billboard>dg2) throws IOException {
+		FileWriter fw= new FileWriter(file);
+		BufferedWriter pw= new BufferedWriter(fw);
+		
 		if(num==2) {
-			pw.println("===========================");
-			pw.println("DANGEROUS BILLBOARD REPORT");
-			pw.println("===========================");
-			pw.println("The dangerous billboard are:");
+			pw.write("===========================\n");
+			pw.write("DANGEROUS BILLBOARD REPORT\n");
+			pw.write("===========================\n");
+			pw.write("The dangerous billboard are:\n");
 			
 			ArrayList<Billboard> dg=dg2;
 			int num1=1;
 			for(int i=0;i<dg.size();i++) {
-				pw.println(num1+". "+dg.get(i).getBrand()+" with area "+dg.get(i).getArea());
+				pw.write(num1+". "+dg.get(i).getBrand()+" with area "+dg.get(i).getArea()+"\n");
 				num1++;
 			}
 		}
 		else {
 			for(int i=0;i<bd.size();i++) {
-				pw.println(bd.get(i).getWidth()+"|"+bd.get(i).getHeigth()+"|"+bd.get(i).isInUse()+"|"+bd.get(i).getBrand());
+				pw.write(bd.get(i).getWidth()+"|"+bd.get(i).getHeigth()+"|"+bd.get(i).isInUse()+"|"+bd.get(i).getBrand()+"\n");
 			}
 		}
 		
+		pw.close();
+		fw.close();
 	}
 	
 	public void firstCharge() throws IOException, EmptyInformationException {
@@ -111,7 +115,7 @@ public class BillboardList {
 		chargerFile(file);
 	}
 	
-	public void saveFile() throws FileNotFoundException {
+	public void saveFile() throws IOException {
 		File file= new File(".\\files\\Listcomplete.txt");
 		ArrayList<Billboard>noExist= new ArrayList<>();
 		fileWriter(file,1,noExist);
