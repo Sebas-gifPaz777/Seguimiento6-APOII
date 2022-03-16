@@ -1,6 +1,5 @@
 package ui;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -102,7 +101,7 @@ public class Main {
 		System.out.println("Total:"+num+" vallas");
 	}
 	
-	public static void dangerousBillboard() throws FileNotFoundException {
+	public static void dangerousBillboard() throws IOException {
 		System.out.println("===========================");
 		System.out.println("DANGEROUS BILLBOARD REPORT");
 		System.out.println("===========================");
